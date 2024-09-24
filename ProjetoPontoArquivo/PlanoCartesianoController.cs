@@ -52,11 +52,34 @@ namespace controle
 
         public ArrayList selecionarPontosSemiPlanoPar()
         {
-            return null;
+            ArrayList lista = null;
+
+            PlanoCartesianoDAO dao = new PlanoCartesianoDAO();
+            lista = dao.obterTodos(1, true);
+
+            ArrayList pontosSemiPlanoPar = new ArrayList();
+
+            for(int i = 0; i < lista.Count; i++)
+            {
+                PontoVO objeto = (PontoVO)lista[i];
+
+                double resultado = objeto.X * objeto.Y;
+                if(resultado < 0)
+                {
+                    pontosSemiPlanoPar.Add(objeto);
+                }
+            }
+            return pontosSemiPlanoPar;
+
         }
         public ArrayList selecionarPontos(int tipoFigura)
         {
-            return null;
+            ArrayList lista = null;
+
+            PlanoCartesianoDAO dao = new PlanoCartesianoDAO();
+            lista = dao.obterTodos(tipoFigura);
+
+            return lista;
         }
     }
 }
