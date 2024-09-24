@@ -11,48 +11,55 @@ namespace modelo
     {
         public ArrayList obterTodos()
         {
-            ArrayList lista = new ArrayList();
-            lista.Add("José");
-            lista.Add("Maria");
-            lista.Add("João");
-            return lista;
-        }
-        public ArrayList obterTodos(int tipoFigura)
-        {
-            ArrayList lista = new ArrayList();
+            ArrayList pontos = new ArrayList();
             string linha = "";
-            StreamReader rd = new StreamReader(@"registros.txt");
-            while (!rd.EndOfStream)
-            {
-                linha = rd.ReadLine();
-                lista.Add(linha);
-            }
-            return lista;
-        }
-
-        public ArrayList obterTodos(int tipo, bool flag)
-        {
-            ArrayList lista = new ArrayList();
-            string linha = "";
-            string[] tokens = null;
+            string[] itens = null;
             PontoVO pontoVO = null;
 
-            StreamReader rd = new StreamReader(@"registros.txt");
-            while (!rd.EndOfStream)
+            StreamReader leitor = new StreamReader(@"registros.txt");
+            while (!leitor.EndOfStream)
             {
-                linha = rd.ReadLine();
-                tokens = linha.Split(";");
+                linha = leitor.ReadLine();
+                itens = linha.Split(";");
                 try
                 {
-                    pontoVO = new PontoVO(int.Parse(tokens[0]), int.Parse(tokens[1]), tokens[2], double.Parse(tokens[3]), double.Parse(tokens[4]));
-                    lista.Add(pontoVO);
+                    pontoVO = new PontoVO(int.Parse(itens[0]), int.Parse(itens[1]), itens[2], double.Parse(itens[3]), double.Parse(itens[4]));
+                    pontos.Add(pontoVO);
                 }
                 catch (Exception e)
                 {
-                    // Linha inconsistente e será ignorada
-                }                
+                    throw new Exception("Erro ao criar objeto do ponto. Mensagem: {0}", e);
+                }
             }
-            return lista;
+            return pontos;
+        }
+
+        public ArrayList obterTodos(int tipoFigura)
+        {
+            ArrayList pontos = new ArrayList();
+            string linha = "";
+            string[] itens = null;
+            PontoVO pontoVO = null;
+
+            StreamReader leitor = new StreamReader(@"registros.txt");
+            while (!leitor.EndOfStream)
+            {
+                linha = leitor.ReadLine();
+                itens = linha.Split(";");
+                if (itens[1] = tipoFigura)
+                {
+                    try
+                    {
+                        pontoVO = new PontoVO(int.Parse(itens[0]), int.Parse(itens[1]), itens[2], double.Parse(itens[3]), double.Parse(itens[4]));
+                        pontos.Add(pontoVO);
+                    }
+                    catch (Exception e)
+                    {
+                        throw new Exception("Erro ao criar objeto do ponto. Mensagem: {0}", e);
+                    }
+                }
+            }
+            return pontos;
         }
     }
 }

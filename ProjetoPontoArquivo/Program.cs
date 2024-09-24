@@ -13,24 +13,24 @@ namespace visao
 
             ArrayList lista = objetoPc1.obterTodos();
 
-            Console.WriteLine("Imprime o código hard code");
-            // Lê imprime os elementos hard coded
-            for (int i=0; i<lista.Count; i++)
-            {
-                string objeto = (string) lista[i];
-                Console.WriteLine(objeto);
+            //Console.WriteLine("Imprime o código hard code");
+            //// Lê imprime os elementos hard coded
+            //for (int i=0; i<lista.Count; i++)
+            //{
+            //    string objeto = (string) lista[i];
+            //    Console.WriteLine(objeto);
 
-            }
+            //}
 
-            // Lê imprime os elementos do arquivo
-            lista = objetoPc1.obterTodos(1);
-            Console.WriteLine("Imprime as linhas do arquivo");
+            //// Lê imprime os elementos do arquivo
+            //lista = objetoPc1.obterTodos(1);
+            //Console.WriteLine("Imprime as linhas do arquivo");
 
-            for (int i = 0; i < lista.Count; i++)
-            {
-                string objeto = (string)lista[i];
-                Console.WriteLine(objeto);
-            }
+            //for (int i = 0; i < lista.Count; i++)
+            //{
+            //    string objeto = (string)lista[i];
+            //    Console.WriteLine(objeto);
+            //}
 
             // Lê imprime os objetos do tipo PontoVO
             lista = objetoPc1.obterTodos(1, true);
