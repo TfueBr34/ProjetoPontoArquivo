@@ -36,6 +36,7 @@ namespace modelo
         public double X { get => x; set => x = value; }
         public double Y { get => y; set => y = value; }
         public int TipoFigura { get => tipoFigura; set => tipoFigura = value; }
+        
 
         public override bool Equals(object? obj)
         {
