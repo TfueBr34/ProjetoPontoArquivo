@@ -54,5 +54,20 @@ namespace modelo
             }
             return lista;
         }
+        public int pesquisar(PontoVO pontoVO)
+        {
+            PlanoCartesianoDAO dao = new PlanoCartesianoDAO();
+            ArrayList lista = dao.obterTodos(1, true);
+
+            for (int i = 0; i < lista.Count; i++)
+            {
+                PontoVO objeto = lista[i];
+                if (objeto.Equals(pontoVO))
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
     }
 }
