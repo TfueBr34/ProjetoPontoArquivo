@@ -25,9 +25,9 @@ namespace controle
             lista = dao.obterTodos(1, true);
 
             ArrayList pontosSelecionados = new ArrayList();
-            for (int i = 0; i < lista.size(); i++)
+            for (int i = 0; i < lista.Count; i++)
             {
-                PontoVO objeto = lista.get(i);
+                PontoVO objeto = (PontoVO) lista[i];
 
                 switch (codigo)
                 {
