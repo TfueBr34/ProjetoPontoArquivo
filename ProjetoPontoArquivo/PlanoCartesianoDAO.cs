@@ -15,57 +15,17 @@ namespace modelo
             string linha = "";
             string[] itens = null;
             PontoVO pontoVO = null;
-
-            StreamReader leitor = new StreamReader(@"registros.txt");
-            while (!leitor.EndOfStream)
+            try
             {
-                linha = leitor.ReadLine();
-                itens = linha.Split(";");
-                try
+                StreamReader leitor = new StreamReader(@"registros.txt");
+                while (!leitor.EndOfStream)
                 {
-                    pontoVO = new PontoVO(int.Parse(itens[0]), int.Parse(itens[1]), itens[2], double.Parse(itens[3]), double.Parse(itens[4]));
-                    switch (int.Parse(itens[1]))
-                    {
-                        case 1:
-                            pontoVO.Lado1 = double.Parse(itens[5]);
-                            break;
-                        case 2:
-                            pontoVO.Lado1 = double.Parse(itens[5]);
-                            pontoVO.Lado2 = double.Parse(itens[6]);
-                            break;
-                        case 3:
-                            pontoVO.Lado1 = double.Parse(itens[5]);
-                            pontoVO.Lado2 = double.Parse(itens[6]);
-                            pontoVO.Lado3 = double.Parse(itens[7]);
-                            break;
-                    }
-                    pontos.Add(pontoVO);
-                }
-                catch (Exception e)
-                {
-                    throw new Exception("Erro ao criar objeto do ponto. Mensagem: {0}", e);
-                }
-            }
-            return pontos;
-        }
-        public ArrayList obterTodos(int tipoFigura)
-        {
-            ArrayList pontos = new ArrayList();
-            string linha = "";
-            string[] itens = null;
-            PontoVO pontoVO = null;
-
-            StreamReader leitor = new StreamReader(@"registros.txt");
-            while (!leitor.EndOfStream)
-            {
-                linha = leitor.ReadLine();
-                itens = linha.Split(";");
-                if (int.Parse(itens[1]) == tipoFigura)
-                {
+                    linha = leitor.ReadLine();
+                    itens = linha.Split(";");
                     try
                     {
                         pontoVO = new PontoVO(int.Parse(itens[0]), int.Parse(itens[1]), itens[2], double.Parse(itens[3]), double.Parse(itens[4]));
-                        switch (tipoFigura)
+                        switch (int.Parse(itens[1]))
                         {
                             case 1:
                                 pontoVO.Lado1 = double.Parse(itens[5]);
@@ -87,6 +47,58 @@ namespace modelo
                         throw new Exception("Erro ao criar objeto do ponto. Mensagem: {0}", e);
                     }
                 }
+            }catch (Exception e)
+            {
+                throw new Exception("Erro ao ler arquivo. Mensagem: {0}", e);
+            }
+            return pontos;
+        }
+        public ArrayList obterTodos(int tipoFigura)
+        {
+            ArrayList pontos = new ArrayList();
+            string linha = "";
+            string[] itens = null;
+            PontoVO pontoVO = null;
+
+            try
+            {
+                StreamReader leitor = new StreamReader(@"registros.txt");
+                while (!leitor.EndOfStream)
+                {
+                    linha = leitor.ReadLine();
+                    itens = linha.Split(";");
+                    if (int.Parse(itens[1]) == tipoFigura)
+                    {
+                        try
+                        {
+                            pontoVO = new PontoVO(int.Parse(itens[0]), int.Parse(itens[1]), itens[2], double.Parse(itens[3]), double.Parse(itens[4]));
+                            switch (tipoFigura)
+                            {
+                                case 1:
+                                    pontoVO.Lado1 = double.Parse(itens[5]);
+                                    break;
+                                case 2:
+                                    pontoVO.Lado1 = double.Parse(itens[5]);
+                                    pontoVO.Lado2 = double.Parse(itens[6]);
+                                    break;
+                                case 3:
+                                    pontoVO.Lado1 = double.Parse(itens[5]);
+                                    pontoVO.Lado2 = double.Parse(itens[6]);
+                                    pontoVO.Lado3 = double.Parse(itens[7]);
+                                    break;
+                            }
+                            pontos.Add(pontoVO);
+                        }
+                        catch (Exception e)
+                        {
+                            throw new Exception("Erro ao criar objeto do ponto. Mensagem: {0}", e);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Erro ao ler arquivo. Mensagem: {0}", e);
             }
             return pontos;
         }
@@ -94,25 +106,33 @@ namespace modelo
         {
             ArrayList pontos = obterTodos();
             pontos.Insert(pontoVO.Codigo-1, pontoVO);
-            StreamWriter escritor = new StreamWriter("@registros.txt");
-            escritor.WriteLine("n="+pontos.Count);
-            escritor.WriteLine("NSU;tipoFigura;descricao;x;y;valor1;valor2;valor3");
-            foreach (PontoVO ponto in pontos)
+            try
             {
-                escritor.Write(ponto.Codigo.ToString() + ";" + ponto.TipoFigura.ToString() + ";" + ponto.Descricao.ToString() + ";" + ponto.X.ToString() + ";" + ponto.Y.ToString() + ";");
-                switch (ponto.TipoFigura)
+                StreamWriter escritor = new StreamWriter("@registros.txt");
+                escritor.WriteLine("n=" + pontos.Count);
+                escritor.WriteLine("NSU;tipoFigura;descricao;x;y;valor1;valor2;valor3");
+                foreach (PontoVO ponto in pontos)
                 {
-                    case 1:
-                        escritor.Write(ponto.Lado1+";;\n");
-                        break;
-                    case 2:
-                        escritor.Write(ponto.Lado1 + ";" + ponto.Lado2 + ";\n");
-                        break;
-                    case 3:
-                        escritor.Write(ponto.Lado1 + ";" + ponto.Lado2 + ";" + ponto.Lado3 + "\n");
-                        break;
+                    escritor.Write(ponto.Codigo.ToString() + ";" + ponto.TipoFigura.ToString() + ";" + ponto.Descricao.ToString() + ";" + ponto.X.ToString() + ";" + ponto.Y.ToString() + ";");
+                    switch (ponto.TipoFigura)
+                    {
+                        case 1:
+                            escritor.Write(ponto.Lado1 + ";;\n");
+                            break;
+                        case 2:
+                            escritor.Write(ponto.Lado1 + ";" + ponto.Lado2 + ";\n");
+                            break;
+                        case 3:
+                            escritor.Write(ponto.Lado1 + ";" + ponto.Lado2 + ";" + ponto.Lado3 + "\n");
+                            break;
+                    }
                 }
             }
+            catch (Exception e)
+            {
+                throw new Exception("Erro ao escrever no arquivo. Mensagem: {0}", e);
+            }
+           
             return pontos;
         }
         public ArrayList pesquisar(PontoVO pontoVO)
@@ -140,24 +160,31 @@ namespace modelo
         {
             ArrayList pontos = obterTodos();
             pontos.RemoveAt(pontoVO.Codigo - 1);
-            StreamWriter escritor = new StreamWriter("@registros.txt");
-            escritor.WriteLine("n=" + pontos.Count);
-            escritor.WriteLine("NSU;tipoFigura;descricao;x;y;valor1;valor2;valor3");
-            foreach (PontoVO ponto in pontos)
+            try
             {
-                escritor.Write(ponto.Codigo.ToString() + ";" + ponto.TipoFigura.ToString() + ";" + ponto.Descricao.ToString() + ";" + ponto.X.ToString() + ";" + ponto.Y.ToString() + ";");
-                switch (ponto.TipoFigura)
+                StreamWriter escritor = new StreamWriter("@registros.txt");
+                escritor.WriteLine("n=" + pontos.Count);
+                escritor.WriteLine("NSU;tipoFigura;descricao;x;y;valor1;valor2;valor3");
+                foreach (PontoVO ponto in pontos)
                 {
-                    case 1:
-                        escritor.Write(ponto.Lado1 + ";;\n");
-                        break;
-                    case 2:
-                        escritor.Write(ponto.Lado1 + ";" + ponto.Lado2 + ";\n");
-                        break;
-                    case 3:
-                        escritor.Write(ponto.Lado1 + ";" + ponto.Lado2 + ";" + ponto.Lado3 + "\n");
-                        break;
+                    escritor.Write(ponto.Codigo.ToString() + ";" + ponto.TipoFigura.ToString() + ";" + ponto.Descricao.ToString() + ";" + ponto.X.ToString() + ";" + ponto.Y.ToString() + ";");
+                    switch (ponto.TipoFigura)
+                    {
+                        case 1:
+                            escritor.Write(ponto.Lado1 + ";;\n");
+                            break;
+                        case 2:
+                            escritor.Write(ponto.Lado1 + ";" + ponto.Lado2 + ";\n");
+                            break;
+                        case 3:
+                            escritor.Write(ponto.Lado1 + ";" + ponto.Lado2 + ";" + ponto.Lado3 + "\n");
+                            break;
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Erro ao escrever no arquivo. Mensagem: {0}", e);
             }
             return pontos;
         }
