@@ -22,7 +22,7 @@ namespace controle
         {
             ArrayList lista = null;
             PlanoCartesianoDAO dao = new PlanoCartesianoDAO();
-            lista = dao.obterTodos(1, true);
+            lista = dao.obterTodos();
 
             ArrayList pontosSelecionados = new ArrayList();
             for (int i = 0; i < lista.Count; i++)
@@ -32,25 +32,25 @@ namespace controle
                 switch (codigo)
                 {
                     case 1: // Direito
-                        if (objeto.getX() > 0)
+                        if (objeto.X > 0)
                         {
                             pontosSelecionados.Add(objeto);
                         }
                         break;
                     case 2: // Esquerdo
-                        if (objeto.getX() < 0)
+                        if (objeto.X < 0)
                         {
                             pontosSelecionados.Add(objeto);
                         }
                         break;
                     case 3: //Superior
-                        if (objeto.getX() > 0)
+                        if (objeto.Y > 0)
                         {
                             pontosSelecionados.Add(objeto);
                         }
                         break;
                     case 4: //Inferior
-                        if (objeto.getY() < 0)
+                        if (objeto.Y < 0)
                         {
                             pontosSelecionados.Add(objeto);
                         }
@@ -60,6 +60,7 @@ namespace controle
                         break;
                 }
             }
+            return pontosSelecionados;
         }
 
         /* Selecionar os pontos por semiplano que pode ser:
@@ -72,7 +73,7 @@ namespace controle
         {
             ArrayList lista = null;
             PlanoCartesianoDAO dao = new PlanoCartesianoDAO();
-            lista = dao.obterTodos(1, true);
+            lista = dao.obterTodos();
 
             ArrayList pontosSemiPlanoImpar = new ArrayList();
 
@@ -94,7 +95,7 @@ namespace controle
             ArrayList lista = null;
 
             PlanoCartesianoDAO dao = new PlanoCartesianoDAO();
-            lista = dao.obterTodos(1, true);
+            lista = dao.obterTodos();
 
             ArrayList pontosSemiPlanoPar = new ArrayList();
 
