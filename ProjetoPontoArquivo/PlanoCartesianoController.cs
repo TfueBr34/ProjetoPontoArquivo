@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,8 +20,46 @@ namespace controle
          */
         public ArrayList selecionarPontosPorSemiplano(int codigo)
         {
+            ArrayList lista = null;
+            PlanoCartesianoDAO dao = new PlanoCartesianoDAO();
+            lista = dao.obterTodos(1, true);
 
-            return null;
+            ArrayList pontosSelecionados = new ArrayList();
+            for (int i = 0; i < lista.Count; i++)
+            {
+                PontoVO objeto = (PontoVO)lista[i];
+
+                switch (codigo)
+                {
+                    case 1: // Direito
+                        if (objeto.getX() > 0)
+                        {
+                            pontosSelecionados.Add(objeto);
+                        }
+                        break;
+                    case 2: // Esquerdo
+                        if (objeto.getX() < 0)
+                        {
+                            pontosSelecionados.Add(objeto);
+                        }
+                        break;
+                    case 3: //Superior
+                        if (objeto.getX() > 0)
+                        {
+                            pontosSelecionados.Add(objeto);
+                        }
+                        break;
+                    case 4: //Inferior
+                        if (objeto.getY() < 0)
+                        {
+                            pontosSelecionados.Add(objeto);
+                        }
+                        break;
+                    default:
+                        Console.WriteLine("Código Inválido");
+                        break;
+                }
+            }
         }
 
         /* Selecionar os pontos por semiplano que pode ser:
@@ -39,7 +78,7 @@ namespace controle
 
             for (int i = 0; i < lista.Count; i++)
             {
-                PontoVO objeto = (PontoVO) lista[i];
+                PontoVO objeto = (PontoVO)lista[i];
 
                 double resultado = objeto.X * objeto.Y;
                 if (resultado > 0)
@@ -52,11 +91,34 @@ namespace controle
 
         public ArrayList selecionarPontosSemiPlanoPar()
         {
-            return null;
+            ArrayList lista = null;
+
+            PlanoCartesianoDAO dao = new PlanoCartesianoDAO();
+            lista = dao.obterTodos(1, true);
+
+            ArrayList pontosSemiPlanoPar = new ArrayList();
+
+            for (int i = 0; i < lista.Count; i++)
+            {
+                PontoVO objeto = (PontoVO)lista[i];
+
+                double resultado = objeto.X * objeto.Y;
+                if (resultado < 0)
+                {
+                    pontosSemiPlanoPar.Add(objeto);
+                }
+            }
+            return pontosSemiPlanoPar;
+
         }
         public ArrayList selecionarPontos(int tipoFigura)
         {
-            return null;
+            ArrayList lista = null;
+
+            PlanoCartesianoDAO dao = new PlanoCartesianoDAO();
+            lista = dao.obterTodos(tipoFigura);
+
+            return lista;
         }
     }
 }
